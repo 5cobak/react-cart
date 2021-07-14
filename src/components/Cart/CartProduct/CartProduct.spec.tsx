@@ -41,7 +41,7 @@ describe('test CartProduct component', () => {
 			, container);
 		});
 		
-		const expectedTitleElement = container.querySelector('div').querySelector('span');
+		const expectedTitleElement = container.querySelector('div span');
 
 		expect(expectedTitleElement.textContent).toBe('Clock');
 	})
