@@ -1,0 +1,26 @@
+@import '../../utils/styles/vars';
+
+.CartWrap {
+	display: flex;
+	justify-content: space-between;
+
+	@media screen and (max-width: $table-width) {
+		display: block;
+	}
+}
+
+.Cart {
+	box-shadow: $primary-box-shadow;
+	padding: 30px;
+	border-radius: 10px;
+	background-color: white;
+	width: 70%;
+
+	@media screen and (max-width: $table-width) {
+		margin-bottom: 20px;
+	}
+
+	@media screen and (max-width: $table-width) {
+		width: 100%;
+	}
+}

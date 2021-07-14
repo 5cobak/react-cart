@@ -1,0 +1,59 @@
+@import '../../../utils/styles/vars.scss';
+
+.Product {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	border-bottom: 1px solid #ccc;
+	padding: 10px;
+}
+
+.title {
+	font-size: 20px;
+}
+
+.title, .price, .quantity {
+	display: inline-block;
+	margin-bottom: 20px;
+}
+
+.price {
+	align-self: flex-end;
+	font-weight: bold;
+	font-size: 20px;
+}
+
+.quantityWrap {
+	align-self: center;
+}
+
+.button {
+	cursor: pointer;
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+	border: none;
+	background-color: white;
+	box-shadow: $button-box-shadow;
+	border: 1px solid rgb(175, 174, 174);
+}
+
+.buttonNotActive {
+	opacity: .6;
+	cursor: initial;
+}
+
+.buttonRemove {
+	background-color: $danger-color;
+	color: white;
+	border: none;
+	border-radius: 4px;
+	align-self: flex-end;
+	cursor: pointer;
+	padding: 5px;
+	transition-duration: $transition-fast;
+
+	&:hover {
+		opacity: .8;
+	}
+}

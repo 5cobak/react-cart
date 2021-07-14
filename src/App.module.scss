@@ -1,0 +1,30 @@
+@import './utils/styles/vars';
+
+.App {
+	margin: 0 auto;
+  padding: 30px;
+  width: 100%;
+  max-width: $desktop-width;
+  height: 100%;
+
+  @media screen and (max-width: $desktop-width) {
+    max-width: $md-desktop-width;
+  }
+
+  @media screen and (max-width: $md-desktop-width) {
+    max-width: $sm-desktop-width;
+  }
+
+  @media screen and (max-width: $sm-desktop-width) {
+    width: 100%;
+  }
+
+  @media (min-width: $phone-width) and (max-width: $table-width) {
+    width: 100%;
+  }
+
+  @media (min-width: $sm-phone-width) and (max-width: $phone-width) {
+    padding: 20px;
+    max-width: 100vw;
+  }
+}
