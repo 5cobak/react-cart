@@ -14,11 +14,6 @@ export interface CartState {
 	}[]
 }
 
-const initialState: CartState = {
-	products: [],
-	status: 'loading'
-};
-
 type ProductPayload = {
 	id: number,
 	title: string,
@@ -33,13 +28,20 @@ type IncrementPayload = {
 	price: number
 }
 
+const initialState: CartState = {
+	products: [],
+	status: 'loading'
+};
+
 const cartSlice = createSlice({
 	name: 'cart',
 	initialState,
 	reducers: {
+		// action for add product by use form
 		addProduct: (state, action: PayloadAction<ProductPayload>) =>{
 			state.products = [action.payload, ...state.products];
 		},
+		// increment quantity of product by click on increment button
 		incrementQuantity: (state, action: PayloadAction<IncrementPayload>) => {
 			const { id, num } = action.payload;
 			state.products.forEach(product => {
@@ -49,6 +51,7 @@ const cartSlice = createSlice({
 				}
 			})
 		},
+		// the same action as one above, only for click decrement button
 		decrementQuantity: (state, action: PayloadAction<IncrementPayload>) => {
 			const { id, num } = action.payload;
 			state.products.forEach(product => {
@@ -58,6 +61,7 @@ const cartSlice = createSlice({
 				}
 			})
 		},
+		// action for delete product from cart by click remove button at CartProduct component
 		deleteProduct: (state, action: PayloadAction<number>) => {
 			const id = action.payload;
 			state.products.forEach((product, index) => {
@@ -69,9 +73,11 @@ const cartSlice = createSlice({
 	},
 	extraReducers: (builder) => {
 		builder
+			// set loading status when fetching products from fake store api
 			.addCase(getAsyncProducts.pending, (state) => {
 				state.status = 'loading';
       })
+			// set products at state
 			.addCase(getAsyncProducts.fulfilled, (state,action) => {
         state.products = action.payload;
 				state.products.forEach(product => {

@@ -6,6 +6,8 @@ import { cartSelector } from './cartSlice';
 import CartProduct from './CartProduct/CartProduct';
 import CartForm from './CartForm/CarForm';
 
+
+// main component for all products and form
 const Cart = ()=> {
 	const { products, status } = useAppSelector(cartSelector);
 	const dispatch = useAppDispatch();

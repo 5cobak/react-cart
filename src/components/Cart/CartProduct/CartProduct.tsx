@@ -10,15 +10,17 @@ type CartProductTypeProps = {
 	id: number;
 	totalPrice: number;
 }
-
+// component for render product
 const CartProduct = ({ title, price, quantity, id, totalPrice }: CartProductTypeProps) => {
 	const dispatch = useAppDispatch();
-
+	// changed styles for button decrement depending on quantity
+	// If quantity is equal to 1 - set class buttonNotActive
 	const clsIncrementButton = [
 		classes.button,
 		quantity === 1 ? classes.buttonNotActive : ''
 	].join(' ');
 
+	// dispatch the action that increment quantity
 	const handlerButtonIncrementClick = () => {
 		dispatch( incrementQuantity({
 			num: 1,
@@ -26,8 +28,9 @@ const CartProduct = ({ title, price, quantity, id, totalPrice }: CartProductType
 			price: quantity * price
 		}))
 	}
-
+	// dispatch the action that decrement quantity
 	const handlerButtonDecrementClick = () => {
+		// if quantity is equal to 1 - stop decrement
 		if ( quantity === 1 ) return;
 
 		dispatch(decrementQuantity({
@@ -37,6 +40,7 @@ const CartProduct = ({ title, price, quantity, id, totalPrice }: CartProductType
 		}))
 	}
 
+	// remove product by click on remove button
 	const handlerButtonRemoveClick = () => {
 		dispatch(deleteProduct(id));
 	}

@@ -3,36 +3,44 @@ import { useAppDispatch } from '../../../redux/hooks';
 import { addProduct } from '../cartSlice';
 import classes from './CartForm.module.scss';
 
+// component for adding product
 const CartForm = () => {
 	const dispatch = useAppDispatch();
+	// set local state for name and price
 	const [name, setName] = React.useState<string>('');
 	const [price, setPrice]  = React.useState<string>('');
 	const [isFormValid, setIsFormValid] = React.useState<boolean>(true);
 	const isPriceValid = !isNaN(Number(price));
 
 	const handlerChangeName = (e: React.ChangeEvent<HTMLInputElement>) => {
+		// unmount error message from form
 		setIsFormValid(true);
+		// added change local name state
 		setName(e.target.value.trim());
 	}
 
 	const handlerChangePrice = (e: React.ChangeEvent<HTMLInputElement>) => {
+		// unmount error message from form
 		setIsFormValid(true);
+		// added change local price state
 		setPrice(e.target.value.trim());
 	}
 
 	const handlerClickButton = () => {
+		// added quantity for product, not handled at form
 		const quantity = 1;
+		// check form validation and set local isFormValid state
 		setIsFormValid(
 			Boolean(name) && Boolean(price) && isPriceValid
 		)
-
+		// check empty field and stop to execute the handler, if one is empty at least
 		if ( !name || !price ) return;
-
+		// clear price field and stop to execute handler, if price is NaN
 		if ( !isPriceValid ) {
 			setPrice('');
 			return;
 		};
-
+		// else everything is ok, add the product
 		dispatch(addProduct({
 			title: name,
 			price: Number(price),
@@ -45,7 +53,7 @@ const CartForm = () => {
 		setPrice('');
 
 	}
-
+	// prevent submit form
 	const handlerSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 	}
@@ -71,6 +79,7 @@ const CartForm = () => {
 					value={price}
 				/>
 			</div>
+			{/* render error, if is form not a valid, else render nothing */}
 			{!isFormValid ?  <span className={classes.error}>введите корректные данные</span> : null}
 			<button 
 				type="submit" 
