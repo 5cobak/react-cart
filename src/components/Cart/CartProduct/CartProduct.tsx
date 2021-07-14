@@ -1,6 +1,5 @@
-import React from 'react';
 import { useAppDispatch } from '../../../redux/hooks';
-import { decrementQuantity, deleteProduct, incrementQuantity } from '../cartActions';
+import { decrementQuantity, deleteProduct, incrementQuantity } from '../cartSlice';
 
 import classes from './CartProduct.module.scss';
 
@@ -74,5 +73,7 @@ const CartProduct = ({ title, price, quantity, id, totalPrice }: CartProductType
 		</div>
 	)
 }
+
+export type { CartProductTypeProps };
 
 export default CartProduct;

@@ -1,20 +1,22 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '../../../redux/hooks';
 import { addProduct } from '../cartSlice';
 import classes from './CartForm.module.scss';
 
 const CartForm = () => {
-	const dispatch = useDispatch();
+	const dispatch = useAppDispatch();
 	const [name, setName] = React.useState<string>('');
 	const [price, setPrice]  = React.useState<string>('');
 	const [isFormValid, setIsFormValid] = React.useState<boolean>(true);
 	const isPriceValid = !isNaN(Number(price));
 
 	const handlerChangeName = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setIsFormValid(true);
 		setName(e.target.value.trim());
 	}
 
 	const handlerChangePrice = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setIsFormValid(true);
 		setPrice(e.target.value.trim());
 	}
 

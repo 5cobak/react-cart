@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../redux/store';
-import { decrementQuantity, deleteProduct, getAsyncProducts, incrementQuantity } from './cartActions';
+import { getAsyncProducts } from './cartActions';
 
 export interface CartState {
 	status: 'idle' | 'loading',
@@ -27,15 +27,47 @@ type ProductPayload = {
 	totalPrice: number
 }
 
+type IncrementPayload = {
+	id: number,
+	num: number,
+	price: number
+}
+
 const cartSlice = createSlice({
 	name: 'cart',
 	initialState,
 	reducers: {
 		addProduct: (state, action: PayloadAction<ProductPayload>) =>{
 			state.products = [action.payload, ...state.products];
+		},
+		incrementQuantity: (state, action: PayloadAction<IncrementPayload>) => {
+			const { id, num } = action.payload;
+			state.products.forEach(product => {
+				if ( product.id === id ) {
+					product.quantity += num;
+					product.totalPrice = Number((product.price * product.quantity).toFixed(2));
+				}
+			})
+		},
+		decrementQuantity: (state, action: PayloadAction<IncrementPayload>) => {
+			const { id, num } = action.payload;
+			state.products.forEach(product => {
+				if ( product.id === id ) {
+					product.quantity -= num;
+					product.totalPrice = Number((product.price * product.quantity).toFixed(2));
+				}
+			})
+		},
+		deleteProduct: (state, action: PayloadAction<number>) => {
+			const id = action.payload;
+			state.products.forEach((product, index) => {
+				if ( product.id === id ) {
+					state.products.splice(index, 1)
+				}
+			})
 		}
 	},
-	extraReducers: (builder) =>{
+	extraReducers: (builder) => {
 		builder
 			.addCase(getAsyncProducts.pending, (state) => {
 				state.status = 'loading';
@@ -48,39 +80,12 @@ const cartSlice = createSlice({
 				})
 				state.status = 'idle';
       })
-			.addCase(incrementQuantity, (state, action)=>{
-				const { id, num } = action.payload;
-				state.products.forEach(product => {
-					if(product.id === id) {
-						product.quantity += num;
-						product.totalPrice = Number((product.price * product.quantity).toFixed(2));
-					}
-				})
-			})
-			.addCase(decrementQuantity, (state, action)=>{
-				const { id, num } = action.payload;
-				state.products.forEach(product => {
-					if(product.id === id) {
-						product.quantity -= num;
-						product.totalPrice = Number((product.price * product.quantity).toFixed(2));
-					}
-				})
-			})
-			.addCase(deleteProduct, (state, action)=>{
-				const  id = action.payload;
-				state.products.forEach((product, index) => {
-					if(product.id === id) {
-						state.products.splice(index, 1)
-					}
-				})
-			})
 	}
 });
 
 const cartSelector = (state: RootState) => state.cart;
 
-export const { addProduct } = cartSlice.actions
-
+export const { addProduct, incrementQuantity, decrementQuantity, deleteProduct } = cartSlice.actions
 export { cartSelector };
 
 export default cartSlice.reducer;

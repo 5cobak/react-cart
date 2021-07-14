@@ -24,7 +24,6 @@ const Cart = ()=> {
 						products.map(productData => <CartProduct key={productData.id} {...productData}/>) 
 					: "Loading your goods..."
 				}
-			
 			</div>
 			<CartForm/>
 		</div>
